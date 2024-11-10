@@ -24,4 +24,5 @@ public class Resource extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "lecture_id")
     private Lecture lecture;
+
 }

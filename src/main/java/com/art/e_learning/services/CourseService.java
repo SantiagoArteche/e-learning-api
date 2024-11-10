@@ -1,17 +1,20 @@
 package com.art.e_learning.services;
 
-import com.art.e_learning.generic.BaseService;
 import com.art.e_learning.models.Course;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.art.e_learning.repositories.CourseRepository;
+import com.art.e_learning.services.interfaces.ICourseService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class CourseService extends BaseService<Course> {
 
-    public CourseService(JpaRepository<Course, Integer> repository) {
-        super(repository);
+@Service
+public class CourseService implements ICourseService {
+
+    private final CourseRepository repository;
+
+    public CourseService(CourseRepository repository) {
+        this.repository = repository;
     }
 
     @Override
