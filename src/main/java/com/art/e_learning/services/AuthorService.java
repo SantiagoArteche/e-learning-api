@@ -2,36 +2,30 @@ package com.art.e_learning.services;
 
 import com.art.e_learning.models.Author;
 import com.art.e_learning.repositories.AuthorRepository;
+import com.art.e_learning.generic.BaseService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
-public class AuthorService implements IAuthorService{
+public class AuthorService extends BaseService<Author> implements IAuthorService {
 
-    private final AuthorRepository authorRepository;
+    private final AuthorRepository repository;
 
     public AuthorService(AuthorRepository authorRepository){
-        this.authorRepository = authorRepository;
-    }
-
-    @Override
-    public List<Author> all() {
-        return this.authorRepository.findAll();
-    }
-
-    @Override
-    public Author getById(Integer id) {
-        return this.authorRepository.findById(id).orElse(null);
+        super(authorRepository);
+        this.repository = authorRepository;
     }
 
     @Override
     public Author create(Author author) {
-        return this.authorRepository.save(author);
+        Author findByEmail = this.repository.findByEmail(author.getEmail()).orElse(null);
+
+        if(findByEmail == null) return this.repository.save(author);
+
+        return new Author(null, null, "repeated email", 35);
     }
 
-    @Override
-    public void delete(Integer id) {
-        this.authorRepository.deleteById(id);
+    public Author getByName(String firstName) {
+        return this.repository.findByFirstName(firstName).orElse(null);
     }
 }

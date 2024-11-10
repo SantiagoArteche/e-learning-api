@@ -5,8 +5,9 @@ import com.art.e_learning.models.Author;
 import java.util.List;
 
 public interface IAuthorService {
-    List<Author> all();
+    List<Author> getAll();
     Author getById(Integer id);
+    Author getByName(String name);
     Author create(Author author);
-    void delete(Integer id);
+    boolean delete(Integer id);
 }
