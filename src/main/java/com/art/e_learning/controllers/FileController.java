@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/files")
+@RequestMapping("/resources/files")
 public class FileController extends BaseResourceController<File> {
-    public FileController(BaseResourceService<File> service) {
-        super(service, "File");
+    public FileController(BaseResourceService<File> fileService) {
+        super(fileService, "File");
     }
 }

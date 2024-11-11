@@ -1,9 +1,8 @@
 package com.art.e_learning.controllers;
 
-import com.art.e_learning.models.Author;
 import com.art.e_learning.models.Course;
-import com.art.e_learning.services.AuthorService;
-import com.art.e_learning.services.CourseService;
+
+import com.art.e_learning.services.interfaces.ICourseService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,25 +12,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/courses")
+@RequestMapping("/courses")
 public class CourseController {
 
-    private final CourseService courseService;
+    private final ICourseService service;
 
-    public CourseController(CourseService courseService){
-        this.courseService = courseService;
+    public CourseController(ICourseService courseService){
+        this.service = courseService;
     }
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> getAll(){
         Map<String, Object> response = new HashMap<>();
-        response.put("Courses", this.courseService.getAll());
+        response.put("Courses", this.service.getAll());
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getById(@PathVariable Integer id){
-        Course findCourse = this.courseService.getById(id);
+        Course findCourse = this.service.getById(id);
         Map<String, Object> response = new HashMap<>();
         HttpStatus status;
 
@@ -49,20 +48,18 @@ public class CourseController {
 
     @PostMapping
     public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody Course course){
-        Course newCourse =  this.courseService.create(course);
+        Course newCourse =  this.service.create(course);
         Map<String, Object> response = new HashMap<>();
-        HttpStatus status;
 
         response.put("Success", "Course created");
         response.put("Course", newCourse);
-        status = HttpStatus.OK;
 
-        return ResponseEntity.status(status).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> deleteById(@PathVariable Integer id){
-        boolean isDeleted = this.courseService.delete(id);
+    public ResponseEntity<Map<String, Object>> delete(@PathVariable Integer id){
+        boolean isDeleted = this.service.delete(id);
         Map<String, Object> response = new HashMap<>();
         HttpStatus status;
 

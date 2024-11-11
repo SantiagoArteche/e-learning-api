@@ -1,6 +1,6 @@
 package com.art.e_learning.generic;
 
-import com.art.e_learning.dtos.ResourceDto;
+import com.art.e_learning.dtos.InheritedBaseResourceDto;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,14 +25,14 @@ public abstract class BaseResourceController<T> {
         Map<String, Object> response = new HashMap<>();
 
         response.put(this.nameClass + "s", this.service.getAll(this.nameClass));
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getById(@PathVariable Integer id){
         Map<String, Object> response = new HashMap<>();
         HttpStatus status;
-        ResourceDto findById = this.service.getById(id, this.nameClass);
+        InheritedBaseResourceDto findById = this.service.getById(id, this.nameClass);
 
         if(findById == null){
             response.put("Error", this.nameClass + " with id " + id + " was not found");
@@ -48,12 +48,12 @@ public abstract class BaseResourceController<T> {
     @PostMapping
     public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody T entity){
         Map<String, Object> response = new HashMap<>();
-        ResourceDto newEntity = this.service.create(entity, this.nameClass);
+        InheritedBaseResourceDto newEntity = this.service.create(entity, this.nameClass);
 
         response.put("Success",  this.nameClass + " created");
         response.put(this.nameClass, newEntity);
 
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @DeleteMapping("/{id}")

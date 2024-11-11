@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class DTOResourcesBase {
+public class InheritedBaseResource {
     private Integer id;
 
     private String name;

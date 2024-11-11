@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/texts")
+@RequestMapping("/resources/texts")
 public class TextController extends BaseResourceController<Text> {
-    public TextController(BaseResourceService<Text> baseResourceService){
-        super(baseResourceService, "Text");
-    }
+    public TextController(BaseResourceService<Text> baseResourceService){ super(baseResourceService, "Text" ); }
 }

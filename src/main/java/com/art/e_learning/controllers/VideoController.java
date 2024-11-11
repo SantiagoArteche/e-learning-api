@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/videos")
+@RequestMapping("/resources/videos")
 public class VideoController extends BaseResourceController<Video> {
     public VideoController(BaseResourceService<Video> service) {
         super(service, "Video");
