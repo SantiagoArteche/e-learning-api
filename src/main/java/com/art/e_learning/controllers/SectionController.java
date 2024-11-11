@@ -1,6 +1,5 @@
 package com.art.e_learning.controllers;
 
-
 import com.art.e_learning.models.Section;
 import com.art.e_learning.services.interfaces.ISectionService;
 import org.springframework.http.HttpStatus;

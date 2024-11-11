@@ -1,6 +1,8 @@
 package com.art.e_learning.models;
 
 import com.art.e_learning.generic.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,5 +26,6 @@ public class Section extends BaseEntity {
     private Course course;
 
     @OneToMany(mappedBy = "section")
+    @JsonBackReference
     private List<Lecture> lectures;
 }

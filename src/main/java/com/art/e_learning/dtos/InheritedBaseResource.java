@@ -1,11 +1,9 @@
 package com.art.e_learning.dtos;
 
-
 import com.art.e_learning.models.Lecture;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @AllArgsConstructor
 @NoArgsConstructor

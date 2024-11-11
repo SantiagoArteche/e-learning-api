@@ -1,5 +1,6 @@
 package com.art.e_learning.controllers;
 
+import com.art.e_learning.dtos.CourseDto;
 import com.art.e_learning.models.Course;
 
 import com.art.e_learning.services.interfaces.ICourseService;
@@ -30,7 +31,7 @@ public class CourseController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getById(@PathVariable Integer id){
-        Course findCourse = this.service.getById(id);
+        CourseDto findCourse = this.service.getById(id);
         Map<String, Object> response = new HashMap<>();
         HttpStatus status;
 
@@ -48,7 +49,7 @@ public class CourseController {
 
     @PostMapping
     public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody Course course){
-        Course newCourse =  this.service.create(course);
+        CourseDto newCourse =  this.service.create(course);
         Map<String, Object> response = new HashMap<>();
 
         response.put("Success", "Course created");

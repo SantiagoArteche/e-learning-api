@@ -25,4 +25,8 @@ public abstract class BaseEntity {
     private String createdBy;
 
     private String lastModifiedBy;
+
+    public BaseEntity(Integer id){
+        this.id = id;
+    }
 }

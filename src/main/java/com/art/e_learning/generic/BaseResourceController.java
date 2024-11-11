@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public abstract class BaseResourceController<T> {
 
     private final BaseResourceService<T> service;

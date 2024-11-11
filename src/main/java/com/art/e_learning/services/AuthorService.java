@@ -1,44 +1,52 @@
 package com.art.e_learning.services;
 
+import com.art.e_learning.dtos.AuthorDto;
 import com.art.e_learning.models.Author;
 import com.art.e_learning.repositories.AuthorRepository;
 import com.art.e_learning.services.interfaces.IAuthorService;
 import org.springframework.stereotype.Service;
-
+import static com.art.e_learning.dtos.AuthorDto.*;
 import java.util.List;
-
 
 @Service
 public class AuthorService implements IAuthorService {
 
-    private final AuthorRepository repository;
+    private final AuthorRepository authorRepository;
 
     public AuthorService(AuthorRepository authorRepository){
-        this.repository = authorRepository;
+        this.authorRepository = authorRepository;
     }
 
     @Override
-    public List<Author> getAll() {
-        return this.repository.findAll();
+    public List<AuthorDto> getAll() {
+        return toListResponse(this.authorRepository.findAll());
     }
 
     @Override
-    public Author getById(Integer id) {
-        return this.repository.findById(id).orElse(null);
+    public AuthorDto getById(Integer id) {
+        Author findAuthor = this.authorRepository.findById(id).orElse(null);
+
+        if(findAuthor == null) return null;
+
+        return toResponse(findAuthor);
     }
 
     @Override
-    public Author getByName(String firstName) {
-        return this.repository.findByFirstName(firstName).orElse(null);
+    public AuthorDto getByName(String firstName) {
+        Author findAuthor = this.authorRepository.findByFirstName(firstName).orElse(null);
+
+        if(findAuthor == null) return null;
+
+        return toResponse(findAuthor);
     }
 
     @Override
-    public Author create(Author author) {
-        Author findByEmail = this.repository.findByEmail(author.getEmail()).orElse(null);
+    public AuthorDto create(Author author) {
+        Author findByEmail = this.authorRepository.findByEmail(author.getEmail()).orElse(null);
 
-        if(findByEmail == null) return this.repository.save(author);
+        if(findByEmail == null) return toResponse(this.authorRepository.save(author));
 
-        return new Author(null, null, "repeated email", 35);
+        return toResponse(new Author(null, null, "repeated email", 0));
     }
 
 
@@ -46,7 +54,7 @@ public class AuthorService implements IAuthorService {
     public boolean delete(Integer id) {
         if(getById(id) == null) return false;
 
-        this.repository.deleteById(id);
+        this.authorRepository.deleteById(id);
 
         return true;
     }

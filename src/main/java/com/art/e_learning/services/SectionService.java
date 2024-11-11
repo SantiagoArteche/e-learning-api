@@ -13,32 +13,28 @@ public class SectionService implements ISectionService {
 
     private final SectionRepository repository;
 
-    public SectionService(SectionRepository sectionRepository){
+    public SectionService(SectionRepository sectionRepository) {
         this.repository = sectionRepository;
     }
-
 
     @Override
     public List<Section> getAll() {
         return this.repository.findAll();
     }
 
-
     @Override
     public Section getById(Integer id) {
         return this.repository.findById(id).orElse(null);
     }
-
 
     @Override
     public Section create(Section entity) {
         return this.repository.save(entity);
     }
 
-
     @Override
     public boolean delete(Integer id) {
-        if(getById(id) == null) return false;
+        if (getById(id) == null) return false;
 
         this.repository.deleteById(id);
 

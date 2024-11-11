@@ -1,12 +1,14 @@
 package com.art.e_learning.services;
 
+import com.art.e_learning.dtos.CourseDto;
+import static com.art.e_learning.dtos.CourseDto.*;
 import com.art.e_learning.models.Course;
 import com.art.e_learning.repositories.CourseRepository;
 import com.art.e_learning.services.interfaces.ICourseService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
+import java.util.List;
 
 @Service
 public class CourseService implements ICourseService {
@@ -18,18 +20,22 @@ public class CourseService implements ICourseService {
     }
 
     @Override
-    public List<Course> getAll() {
-        return this.repository.findAll();
+    public List<CourseDto> getAll() {
+        return toListResponse(this.repository.findAll());
     }
 
     @Override
-    public Course getById(Integer id) {
-        return this.repository.findById(id).orElse(null);
+    public CourseDto getById(Integer id) {
+        Course findCourse = this.repository.findById(id).orElse(null);
+
+        if(findCourse == null) return null;
+
+        return toResponse(findCourse);
     }
 
     @Override
-    public Course create(Course course) {
-        return this.repository.save(course);
+    public CourseDto create(Course course) {
+        return toResponse(this.repository.save(course));
     }
 
     @Override
