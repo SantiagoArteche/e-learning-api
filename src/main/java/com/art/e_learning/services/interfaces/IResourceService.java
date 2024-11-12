@@ -1,15 +1,11 @@
 package com.art.e_learning.services.interfaces;
 
-import com.art.e_learning.models.Resource;
+import com.art.e_learning.dtos.ResourceDto;
 
 import java.util.List;
 
 public interface IResourceService {
-    List<Resource> getAll();
+    List<ResourceDto> getAll();
 
-    Resource getById(Integer id);
-
-    Resource create(Resource resource);
-
-    boolean delete(Integer id);
+    ResourceDto getById(Integer id);
 }

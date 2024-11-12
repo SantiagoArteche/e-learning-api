@@ -4,6 +4,7 @@ import com.art.e_learning.generic.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,6 +24,7 @@ public class Section extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "course_id")
+    @JsonManagedReference
     private Course course;
 
     @OneToMany(mappedBy = "section")

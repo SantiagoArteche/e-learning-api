@@ -73,7 +73,7 @@ public class AuthorController {
         } else {
             response.put("Success", "Author created");
             response.put("Author", newAuthor);
-            status = HttpStatus.OK;
+            status = HttpStatus.CREATED;
         }
         return ResponseEntity.status(status).body(response);
     }

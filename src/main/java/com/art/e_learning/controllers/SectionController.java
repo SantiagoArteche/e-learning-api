@@ -1,7 +1,9 @@
 package com.art.e_learning.controllers;
 
+import com.art.e_learning.dtos.SectionDto;
 import com.art.e_learning.models.Section;
 import com.art.e_learning.services.interfaces.ISectionService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +23,8 @@ public class SectionController {
     }
 
     @GetMapping
-    public ResponseEntity<Map<String, List<Section>>> getAll(){
-        Map<String, List<Section>> response = new HashMap<>();
+    public ResponseEntity<Map<String, List<SectionDto>>> getAll(){
+        Map<String, List<SectionDto>> response = new HashMap<>();
         response.put("Sections", this.service.getAll());
 
         return ResponseEntity.ok(response);
@@ -30,7 +32,7 @@ public class SectionController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getById(@PathVariable Integer id){
-        Section findSection = this.service.getById(id);
+        SectionDto findSection = this.service.getById(id);
         Map<String, Object> response = new HashMap<>();
         HttpStatus status;
 
@@ -46,13 +48,21 @@ public class SectionController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, Object>> create(@RequestBody Section section){
-        Section newSection = this.service.create(section);
+    public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody SectionDto section){
+        SectionDto newSection = this.service.create(section);
         Map<String, Object> response = new HashMap<>();
-        response.put("Success", "Section was created");
-        response.put("Section", newSection);
+        HttpStatus status;
 
-        return ResponseEntity.ok(response);
+        if(newSection.id() == -1){
+            response.put("Error", "Course with id " + section.courseId() + " not found");
+            status = HttpStatus.NOT_FOUND;
+        }else{
+            response.put("Success", "Section created");
+            response.put("Section", newSection);
+            status = HttpStatus.CREATED;
+        }
+
+        return ResponseEntity.status(status).body(response);
     }
 
     @DeleteMapping("/{id}")

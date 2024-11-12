@@ -63,7 +63,7 @@ public class LectureController {
         }else{
             response.put("Success", "Lecture created");
             response.put("Lecture", newLecture);
-            status = HttpStatus.OK;
+            status = HttpStatus.CREATED;
         }
 
         return ResponseEntity.status(status).body(response);

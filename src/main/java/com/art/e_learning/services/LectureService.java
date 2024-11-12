@@ -54,21 +54,20 @@ public class LectureService implements ILectureService {
                 newLecture.setSection(findSection);
             } else {
                 newLecture.setId(-2);
-                return toResponse(newLecture);
             }
         }
 
         if (lecture.resourceId() != null) {
             Resource findResource = this.resourceRepository.findById(lecture.resourceId()).orElse(null);
             if (findResource != null) {
-                newLecture.setResource(findResource);
+               newLecture.setResource(findResource);
             } else {
                 newLecture.setId(-1);
-                return toResponse(newLecture);
             }
         }
 
-        System.out.println(newLecture);
+        if(newLecture.getId() != null && newLecture.getId() < 0) return toResponse(newLecture);
+
         return toResponse(this.repository.save(newLecture));
     }
 

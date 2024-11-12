@@ -1,5 +1,7 @@
 package com.art.e_learning.services;
 
+import com.art.e_learning.dtos.ResourceDto;
+import static com.art.e_learning.dtos.ResourceDto.*;
 import com.art.e_learning.models.Resource;
 import com.art.e_learning.repositories.ResourceRepository;
 import com.art.e_learning.services.interfaces.IResourceService;
@@ -18,29 +20,18 @@ public class ResourceService implements IResourceService {
 
 
     @Override
-    public List<Resource> getAll() {
-        return this.repository.findAll();
+    public List<ResourceDto> getAll() {
+        return toListResponse(this.repository.findAll());
     }
 
 
     @Override
-    public Resource getById(Integer id) {
-        return this.repository.findById(id).orElse(null);
+    public ResourceDto getById(Integer id) {
+        Resource findResource = this.repository.findById(id).orElse(null);
+
+        if(findResource == null) return null;
+
+        return toResponse(findResource);
     }
 
-
-    @Override
-    public Resource create(Resource resource) {
-        return this.repository.save(resource);
-    }
-
-
-    @Override
-    public boolean delete(Integer id) {
-        if(getById(id) == null) return false;
-
-        this.repository.deleteById(id);
-
-        return true;
-    }
 }

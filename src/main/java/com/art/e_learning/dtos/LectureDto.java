@@ -1,8 +1,6 @@
 package com.art.e_learning.dtos;
 
 import com.art.e_learning.models.Lecture;
-import com.art.e_learning.models.Resource;
-import com.art.e_learning.models.Section;
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
