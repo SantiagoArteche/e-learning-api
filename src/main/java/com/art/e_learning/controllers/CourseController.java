@@ -48,14 +48,20 @@ public class CourseController {
 
 
     @PostMapping
-    public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody Course course){
-        CourseDto newCourse =  this.service.create(course);
+    public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody CourseDto courseDto){
+        CourseDto newCourse =  this.service.create(courseDto);
         Map<String, Object> response = new HashMap<>();
+        HttpStatus status;
+        if(newCourse.id() == -1){
+            response.put("Error", "Author with id/s " + courseDto.authors() + " not found");
+            status = HttpStatus.NOT_FOUND;
+        }else{
+            response.put("Success", "Course created");
+            response.put("Course", newCourse);
+            status = HttpStatus.CREATED;
+        }
 
-        response.put("Success", "Course created");
-        response.put("Course", newCourse);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(status).body(response);
     }
 
     @DeleteMapping("/{id}")

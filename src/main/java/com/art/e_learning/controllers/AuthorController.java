@@ -63,12 +63,12 @@ public class AuthorController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, Object>> create(@RequestBody Author author) {
-        AuthorDto newAuthor = this.service.create(author);
+    public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody AuthorDto authorDto) {
+        AuthorDto newAuthor = this.service.create(authorDto);
         Map<String, Object> response = new HashMap<>();
         HttpStatus status;
         if (newAuthor.email().equals("repeated email")) {
-            response.put("Error", "Email " + author.getEmail() + " already in use");
+            response.put("Error", "Email " + authorDto.email() + " already in use");
             status = HttpStatus.BAD_REQUEST;
         } else {
             response.put("Success", "Author created");

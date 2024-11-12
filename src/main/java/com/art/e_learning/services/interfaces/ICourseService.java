@@ -10,7 +10,7 @@ public interface ICourseService {
 
     CourseDto getById(Integer id);
 
-    CourseDto create(Course course);
+    CourseDto create(CourseDto course);
 
     boolean delete(Integer id);
 }

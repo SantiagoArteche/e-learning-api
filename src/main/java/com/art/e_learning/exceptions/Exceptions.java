@@ -73,4 +73,5 @@ public class Exceptions {
 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
 }

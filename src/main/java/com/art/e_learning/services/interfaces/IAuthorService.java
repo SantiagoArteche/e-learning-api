@@ -9,6 +9,6 @@ public interface IAuthorService {
     List<AuthorDto> getAll();
     AuthorDto getById(Integer id);
     AuthorDto getByName(String name);
-    AuthorDto create(Author author);
+    AuthorDto create(AuthorDto authorDto);
     boolean delete(Integer id);
 }

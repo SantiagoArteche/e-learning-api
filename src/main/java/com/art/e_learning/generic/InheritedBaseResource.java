@@ -1,4 +1,4 @@
-package com.art.e_learning.dtos;
+package com.art.e_learning.generic;
 
 import com.art.e_learning.models.Lecture;
 import lombok.AllArgsConstructor;

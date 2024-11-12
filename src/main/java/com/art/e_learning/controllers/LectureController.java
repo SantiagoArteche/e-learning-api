@@ -54,10 +54,8 @@ public class LectureController {
         Map<String, Object> response = new HashMap<>();
         HttpStatus status;
 
+
         if(newLecture.id() == -1){
-            response.put("Error", "Resource with id " + lecture.resourceId() + " not found");
-            status = HttpStatus.NOT_FOUND;
-        }else if(newLecture.id() == -2){
             response.put("Error", "Section with id " + lecture.sectionId() + " not found");
             status = HttpStatus.NOT_FOUND;
         }else{

@@ -9,16 +9,14 @@ public record LectureDto(
         Integer id,
         @NotBlank(message = "Name is required")
         String name,
-        Integer sectionId,
-        Integer resourceId) {
+        Integer sectionId) {
 
     public static LectureDto toResponse(Lecture lecture){
         return new LectureDto(lecture.getId(), lecture.getName(),
-                lecture.getSection() != null ? lecture.getSection().getId() : null,
-                lecture.getResource() != null ? lecture.getResource().getId() : null);
+                lecture.getSection() != null ? lecture.getSection().getId() : null);
     }
 
-    public static List<LectureDto> toResponseList(List<Lecture> lectures){
+    public static List<LectureDto> toListResponse(List<Lecture> lectures){
         return lectures.stream().map(LectureDto::toResponse).toList();
     }
 }

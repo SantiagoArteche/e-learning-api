@@ -41,10 +41,11 @@ public class AuthorService implements IAuthorService {
     }
 
     @Override
-    public AuthorDto create(Author author) {
-        Author findByEmail = this.authorRepository.findByEmail(author.getEmail()).orElse(null);
+    public AuthorDto create(AuthorDto authorDto) {
+        Author findByEmail = this.authorRepository.findByEmail(authorDto.email()).orElse(null);
+        Author newAuthor = new Author(authorDto.firstName(), authorDto.lastName(), authorDto.email(), authorDto.age());
 
-        if(findByEmail == null) return toResponse(this.authorRepository.save(author));
+        if(findByEmail == null) return toResponse(this.authorRepository.save(newAuthor));
 
         return toResponse(new Author(null, null, "repeated email", 0));
     }

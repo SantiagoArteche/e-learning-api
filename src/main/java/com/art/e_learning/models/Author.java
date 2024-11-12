@@ -1,6 +1,8 @@
 package com.art.e_learning.models;
 
 import com.art.e_learning.generic.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.NotBlank;
@@ -14,19 +16,17 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 public class Author extends BaseEntity {
-    @NotBlank(message = "First Name is required")
     private String firstName;
 
-    @NotBlank(message = "Last Name is required")
     private String lastName;
 
     @Column(unique = true, nullable = false)
-    @NotBlank(message = "Email is required")
     private String email;
 
     private int age;
 
-    @ManyToMany(mappedBy = "authors", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "authors")
+    @JsonBackReference
     private List<Course> courses;
 
     public Author(String firstName, String lastName, String email, int age){

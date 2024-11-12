@@ -45,14 +45,22 @@ public abstract class BaseResourceController<T> {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody T entity){
+    public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody InheritedBaseResourceDto entityDto){
         Map<String, Object> response = new HashMap<>();
-        InheritedBaseResourceDto newEntity = this.service.create(entity, this.nameClass);
+        InheritedBaseResourceDto newEntity = this.service.create(entityDto, this.nameClass);
+        HttpStatus status;
 
-        response.put("Success",  this.nameClass + " created");
-        response.put(this.nameClass, newEntity);
+        if(newEntity.id() == -1){
+            response.put("Error",  "Lecture with id " + entityDto.lectureId() + " was not found");
+            status = HttpStatus.NOT_FOUND;
+        }else{
+            response.put("Success",  this.nameClass + " created");
+            response.put(this.nameClass, newEntity);
+            status = HttpStatus.CREATED;
+        }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
+        return ResponseEntity.status(status).body(response);
     }
 
     @DeleteMapping("/{id}")

@@ -1,5 +1,6 @@
 package com.art.e_learning.dtos;
 
+import com.art.e_learning.generic.InheritedBaseResource;
 import com.art.e_learning.models.File;
 import com.art.e_learning.models.Text;
 import com.art.e_learning.models.Video;
@@ -13,7 +14,8 @@ public record InheritedBaseResourceDto<T> (Integer id,
                                            int size,
                                            String url,
                                            Integer lectureId,
-                                           T inherited) {
+                                           T inherited
+) {
 
     public static InheritedBaseResourceDto toResponse(InheritedBaseResource inheritedResourcesBaseDTO){
         var inherited = inheritedResourcesBaseDTO.getType() != null ? inheritedResourcesBaseDTO.getType() : inheritedResourcesBaseDTO.getContent() != null ? inheritedResourcesBaseDTO.getContent() : inheritedResourcesBaseDTO.getLength();
@@ -21,6 +23,7 @@ public record InheritedBaseResourceDto<T> (Integer id,
 
         return new InheritedBaseResourceDto<>(inheritedResourcesBaseDTO.getId(), inheritedResourcesBaseDTO.getName(), inheritedResourcesBaseDTO.getSize(), inheritedResourcesBaseDTO.getUrl(), lectureId, inherited);
     }
+
 
     public static List<InheritedBaseResource> fromListToBaseEntity(List<Object> objects, String className){
         List <InheritedBaseResource> inheritedResourcesBaseDtos;
@@ -49,7 +52,7 @@ public record InheritedBaseResourceDto<T> (Integer id,
     }
 
 
-    public static List<Object> toResponseList(List<InheritedBaseResource> resources){
+    public static List<Object> toListResponse(List<InheritedBaseResource> resources){
         return Arrays.asList(resources.stream().map(entity -> {
             var inherited = entity.getType() != null ? entity.getType() :
                     entity.getContent() != null ? entity.getContent()

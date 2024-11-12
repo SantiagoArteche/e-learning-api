@@ -26,12 +26,10 @@ public class LectureService implements ILectureService {
         this.sectionRepository = sectionRepository;
     }
 
-
     @Override
     public List<LectureDto> getAll() {
-        return toResponseList(this.repository.findAll());
+        return toListResponse(this.repository.findAll());
     }
-
 
     @Override
     public LectureDto getById(Integer id) {
@@ -41,7 +39,6 @@ public class LectureService implements ILectureService {
 
         return toResponse(findCourse);
     }
-
 
     @Override
     public LectureDto create(LectureDto lecture) {
@@ -53,25 +50,14 @@ public class LectureService implements ILectureService {
             if (findSection != null) {
                 newLecture.setSection(findSection);
             } else {
-                newLecture.setId(-2);
-            }
-        }
-
-        if (lecture.resourceId() != null) {
-            Resource findResource = this.resourceRepository.findById(lecture.resourceId()).orElse(null);
-            if (findResource != null) {
-               newLecture.setResource(findResource);
-            } else {
                 newLecture.setId(-1);
             }
         }
 
-        if(newLecture.getId() != null && newLecture.getId() < 0) return toResponse(newLecture);
+        if(newLecture.getId() != null && newLecture.getId() == -1) return toResponse(newLecture);
 
         return toResponse(this.repository.save(newLecture));
     }
-
-
 
     @Override
     public boolean delete(Integer id) {
