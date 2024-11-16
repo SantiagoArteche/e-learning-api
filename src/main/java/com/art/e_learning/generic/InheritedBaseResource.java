@@ -24,4 +24,5 @@ public class InheritedBaseResource {
     private String content;
 
     private String type;
+
 }
